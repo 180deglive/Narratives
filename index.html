@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Strategy Dashboard | Yvonne Mtengwa</title>
+    <!-- Chosen Palette: Calming Neutrals & Accents (Light Beige, Dark Grey, Teal, Orange, Indigo) -->
+    <!-- Application Structure Plan: A task-oriented SPA with five main sections: 1. Diagnosis Dashboard, 2. Interactive 'Current Reality' Flowchart, 3. Tabbed 'Recommended System' breakdown, 4. Interactive 'Action Plan' checklist, and 5. 'Investment' summary cards. This structure transforms the linear report into an exploratory journey, allowing the client to understand the 'why' (current pain), the 'what' (solution), and the 'how' (action plan) in a non-linear, digestible format, which is more engaging and less overwhelming than a long text document. -->
+    <!-- Visualization & Content Choices: Key stats (70%, 40%, 50%) are dynamic counters for impact. 'Current State' is an HTML/CSS flowchart to visualize chaos. 'Recommended System' uses interactive tabs to break down the solution into manageable parts. 'Implementation Roadmap' is an interactive checklist for a sense of progress. An illustrative donut chart from Chart.js will show the 'Before vs. After' time allocation, visually representing the value of the solution. This focuses on making the strategy tangible and actionable. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8F7F4; /* Light beige */
+            color: #333; /* Dark grey */
+        }
+        .nav-link {
+            transition: all 0.3s ease;
+        }
+        .nav-link.active {
+            color: #004d40; /* Teal-900 */
+            border-bottom: 2px solid #004d40;
+        }
+        .tab-button.active {
+            background-color: #004d40; /* Teal-900 */
+            color: #ffffff;
+        }
+        .chart-container {
+            position: relative;
+            margin: auto;
+            height: 350px;
+            width: 100%;
+            max-width: 400px;
+        }
+        .flowchart-node {
+            border: 2px solid #e0e0e0;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            background-color: white;
+            text-align: center;
+            min-width: 120px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+        .flowchart-arrow {
+            position: relative;
+            height: 2px;
+            background-color: #9ca3af;
+        }
+        .flowchart-arrow::after {
+            content: '';
+            position: absolute;
+            right: -1px;
+            top: -4px;
+            border: solid #9ca3af;
+            border-width: 0 2px 2px 0;
+            display: inline-block;
+            padding: 4px;
+            transform: rotate(-45deg);
+        }
+        .checklist-item input:checked + label .checklist-circle {
+            background-color: #004d40;
+            border-color: #004d40;
+        }
+        .checklist-item input:checked + label .checklist-circle::after {
+            content: '✔';
+            color: white;
+            font-size: 14px;
+            line-height: 22px;
+        }
+        .checklist-item input:checked + label span {
+            text-decoration: line-through;
+            color: #9ca3af;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <h1 class="text-2xl font-bold text-gray-800">Strategy Dashboard: Yvonne Mtengwa</h1>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#diagnosis" class="nav-link text-gray-500 hover:text-gray-900 font-medium pb-1">Diagnosis</a>
+                    <a href="#current-reality" class="nav-link text-gray-500 hover:text-gray-900 font-medium pb-1">Current Reality</a>
+                    <a href="#solution" class="nav-link text-gray-500 hover:text-gray-900 font-medium pb-1">The Solution</a>
+                    <a href="#roadmap" class="nav-link text-gray-500 hover:text-gray-900 font-medium pb-1">Action Plan</a>
+                    <a href="#investment" class="nav-link text-gray-500 hover:text-gray-900 font-medium pb-1">Investment</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+        <!-- Section 1: Diagnosis -->
+        <section id="diagnosis" class="scroll-mt-20">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-extrabold text-gray-900">Your Business Triage: The Diagnosis</h2>
+                <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">Based on our discovery call, we've identified the primary bottleneck and a clear path to streamline your operations, reduce overwhelm, and unlock growth.</p>
+            </div>
+
+            <div class="bg-white p-8 rounded-2xl shadow-lg mb-12">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <h3 class="text-2xl font-bold text-teal-900">Primary Diagnosis: Lead Overwhelm</h3>
+                        <p class="mt-4 text-gray-700">Your primary challenge is <strong>severe lead overwhelm</strong> from a fragmented inquiry system. Inquiries from DMs, multiple email inboxes, and WhatsApp are creating operational chaos, leading to missed opportunities and significant personal burnout. Our goal is to replace this with a streamlined, automated <strong>Qualification System</strong>.</p>
+                        <p class="mt-4 text-gray-700">This strategy will centralize communication, filter leads automatically, and ensure you only spend your valuable time on high-potential clients, freeing you to focus on your passions: people, places, and impact.</p>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="outcomesChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                <div class="bg-teal-50 p-6 rounded-xl">
+                    <p class="text-5xl font-extrabold text-teal-800"><span id="metric1">0</span>%</p>
+                    <p class="mt-2 text-base font-medium text-teal-700">Reduction in Time on Unqualified Leads</p>
+                </div>
+                <div class="bg-orange-50 p-6 rounded-xl">
+                    <p class="text-5xl font-extrabold text-orange-800"><span id="metric2">0</span>%</p>
+                    <p class="mt-2 text-base font-medium text-orange-700">Increase in Qualified Lead Conversion</p>
+                </div>
+                <div class="bg-indigo-50 p-6 rounded-xl">
+                    <p class="text-5xl font-extrabold text-indigo-800"><span id="metric3">0</span>%</p>
+                    <p class="mt-2 text-base font-medium text-indigo-700">Decrease in Time-Per-Lead</p>
+                </div>
+            </div>
+        </section>
+
+        <hr class="my-20 border-gray-200">
+
+        <!-- Section 2: Current Reality -->
+        <section id="current-reality" class="scroll-mt-20">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-extrabold text-gray-900">Current Reality: A Visual Workflow</h2>
+                <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">This flowchart illustrates how inquiries currently flow into your business, highlighting the manual processes and key pain points that contribute to the feeling of being overwhelmed.</p>
+            </div>
+            
+            <div class="bg-white p-8 rounded-2xl shadow-lg">
+                <div class="flex flex-col items-center">
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 w-full max-w-4xl mb-8">
+                        <div class="flowchart-node">📱 Social DMs</div>
+                        <div class="flowchart-node">📧 Multiple Emails</div>
+                        <div class="flowchart-node">💬 WhatsApp</div>
+                        <div class="flowchart-node">🗣️ Referrals</div>
+                    </div>
+                    
+                    <div class="flex justify-center items-center w-full max-w-4xl">
+                        <div class="w-1/4 h-16 border-b-2 border-r-2 border-gray-300 rounded-br-lg"></div>
+                        <div class="w-1/4 h-16 border-b-2 border-x-2 border-gray-300"></div>
+                        <div class="w-1/4 h-16 border-b-2 border-x-2 border-gray-300"></div>
+                        <div class="w-1/4 h-16 border-b-2 border-l-2 border-gray-300 rounded-bl-lg"></div>
+                    </div>
+                     <div class="h-16 w-2 border-x-2 border-gray-300"></div>
+
+                    <div class="flowchart-node bg-red-50 border-red-200 ring-4 ring-red-100 relative">
+                        <span class="absolute -top-3 -right-3 flex h-6 w-6">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-6 w-6 bg-red-500 text-white items-center justify-center font-bold">!</span>
+                        </span>
+                        Yvonne (Manual Sifting & Gut Feel)
+                    </div>
+                    
+                    <div class="h-8 w-2 border-l-2 border-gray-300"></div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-4xl mt-4">
+                       <div class="bg-orange-50 border border-orange-200 p-4 rounded-lg text-center">
+                            <h4 class="font-bold text-orange-800">Unanswered Inquiries</h4>
+                            <p class="text-sm text-orange-700">Leads fall through the cracks due to high volume.</p>
+                       </div>
+                       <div class="bg-orange-50 border border-orange-200 p-4 rounded-lg text-center">
+                            <h4 class="font-bold text-orange-800">Mental Drain</h4>
+                            <p class="text-sm text-orange-700">Constant context switching and decision fatigue.</p>
+                       </div>
+                       <div class="bg-orange-50 border border-orange-200 p-4 rounded-lg text-center">
+                            <h4 class="font-bold text-orange-800">Wasted Time</h4>
+                            <p class="text-sm text-orange-700">Significant hours spent on unqualified prospects.</p>
+                       </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="my-20 border-gray-200">
+
+        <!-- Section 3: The Solution -->
+        <section id="solution" class="scroll-mt-20">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-extrabold text-gray-900">The Solution: Qualification System</h2>
+                <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">This three-part system is designed to automate your workflow, giving you back your time and ensuring a seamless, professional experience for every potential client.</p>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-lg p-2 sm:p-4">
+                <div id="tabs" class="flex flex-col sm:flex-row justify-center mb-6 bg-gray-100 rounded-full p-1">
+                    <button data-tab="tab1" class="tab-button w-full sm:w-auto flex-1 py-3 px-4 rounded-full text-sm sm:text-base font-semibold transition-colors duration-300 ease-in-out">1. Centralize & Qualify</button>
+                    <button data-tab="tab2" class="tab-button w-full sm:w-auto flex-1 py-3 px-4 rounded-full text-sm sm:text-base font-semibold transition-colors duration-300 ease-in-out">2. Automate Sales Process</button>
+                    <button data-tab="tab3" class="tab-button w-full sm:w-auto flex-1 py-3 px-4 rounded-full text-sm sm:text-base font-semibold transition-colors duration-300 ease-in-out">3. Streamline Onboarding</button>
+                </div>
+
+                <div id="tab-content" class="p-4 md:p-8">
+                    <!-- Tab 1 Content -->
+                    <div id="tab1" class="tab-pane">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Centralized Inquiry Hub & Lead Qualification</h3>
+                        <p class="text-gray-600 mb-6">This is the new "front door" to your business. We'll implement an all-in-one system to act as a unified CRM, capturing all inquiries into one database. Automated webforms will handle initial qualification, ending manual note-taking and guesswork.</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <div class="border border-gray-200 rounded-lg p-4">
+                                <h4 class="font-bold">Primary Tool: HoneyBook</h4>
+                                <p class="text-sm text-gray-600 mt-1">An all-in-one system to manage leads, projects, proposals, and payments. Ideal for simplifying your entire clientflow.</p>
+                                <p class="text-xs text-gray-500 mt-2">Est. Cost: ~$36-59/month</p>
+                            </div>
+                            <div class="border border-gray-200 rounded-lg p-4">
+                                <h4 class="font-bold">Alternative: Pipedrive</h4>
+                                <p class="text-sm text-gray-600 mt-1">A highly visual, sales-focused CRM excellent for tracking deals through a pipeline. Great for user-friendliness.</p>
+                                <p class="text-xs text-gray-500 mt-2">Est. Cost: ~$15-30/user/month</p>
+                            </div>
+                             <div class="border border-gray-200 rounded-lg p-4">
+                                <h4 class="font-bold">Integration: Zapier/Make</h4>
+                                <p class="text-sm text-gray-600 mt-1">Connects social media DMs and other apps to your CRM, automating lead capture from all channels.</p>
+                                <p class="text-xs text-gray-500 mt-2">Est. Cost: ~$9-50/month</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Tab 2 Content -->
+                    <div id="tab2" class="tab-pane hidden">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Automated Sales Process & Scheduling</h3>
+                        <p class="text-gray-600 mb-6">For leads that qualify, we'll create an automated journey. Nurture sequences will build trust, and an automated scheduling tool will handle booking your strategy sessions, including pre-payments, without any back-and-forth emails.</p>
+                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <div class="border border-gray-200 rounded-lg p-4">
+                                <h4 class="font-bold">HoneyBook Scheduler</h4>
+                                <p class="text-sm text-gray-600 mt-1">Built directly into HoneyBook, this tool lets clients self-book and pay for sessions, syncing directly with your calendar.</p>
+                                <p class="text-xs text-gray-500 mt-2">Cost: Included in HoneyBook</p>
+                            </div>
+                            <div class="border border-gray-200 rounded-lg p-4">
+                                <h4 class="font-bold">Mailchimp (Reactivated)</h4>
+                                <p class="text-sm text-gray-600 mt-1">For more complex email nurturing, your existing Mailchimp account can be integrated to send targeted follow-up campaigns.</p>
+                                <p class="text-xs text-gray-500 mt-2">Cost: Free tier available</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Tab 3 Content -->
+                    <div id="tab3" class="tab-pane hidden">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Streamlined Payment & Onboarding</h3>
+                        <p class="text-gray-600 mb-6">Create a seamless final step. Your all-in-one system will handle proposals, contracts, invoicing (replacing Invoice Home), and payment processing. Once a client is signed, an automated onboarding sequence will deliver welcome materials and set clear expectations.</p>
+                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <div class="border border-gray-200 rounded-lg p-4">
+                                <h4 class="font-bold">HoneyBook Clientflow</h4>
+                                <p class="text-sm text-gray-600 mt-1">Consolidates proposals, contracts, invoicing, and payments into one smooth, professional process for your clients.</p>
+                                <p class="text-xs text-gray-500 mt-2">Cost: Included in HoneyBook</p>
+                            </div>
+                             <div class="border border-gray-200 rounded-lg p-4">
+                                <h4 class="font-bold">Stripe Integration</h4>
+                                <p class="text-sm text-gray-600 mt-1">Securely process online payments and deposits. Integrates seamlessly with systems like HoneyBook.</p>
+                                <p class="text-xs text-gray-500 mt-2">Cost: ~2.9% + 25¢ per transaction</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <hr class="my-20 border-gray-200">
+
+        <!-- Section 4: Action Plan -->
+        <section id="roadmap" class="scroll-mt-20">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-extrabold text-gray-900">Your Implementation Roadmap</h2>
+                <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">Here is your step-by-step action plan. We'll tackle this in manageable phases to build momentum and ensure a smooth transition.</p>
+            </div>
+            
+            <div class="space-y-10">
+                <div>
+                    <h3 class="text-2xl font-bold text-teal-800 border-l-4 border-teal-500 pl-4 mb-6">48-Hour Quick Wins</h3>
+                    <ul class="space-y-4">
+                        <li class="checklist-item"><input type="checkbox" id="task1" class="hidden"><label for="task1" class="flex items-center cursor-pointer"><div class="checklist-circle h-6 w-6 rounded-full border-2 border-gray-300 mr-4 flex-shrink-0 flex items-center justify-center"></div><span>Update website contact form with 2-3 key qualification questions.</span></label></li>
+                        <li class="checklist-item"><input type="checkbox" id="task2" class="hidden"><label for="task2" class="flex items-center cursor-pointer"><div class="checklist-circle h-6 w-6 rounded-full border-2 border-gray-300 mr-4 flex-shrink-0 flex items-center justify-center"></div><span>Draft a concise, automated email response for unqualified leads.</span></label></li>
+                        <li class="checklist-item"><input type="checkbox" id="task9" class="hidden"><label for="task9" class="flex items-center cursor-pointer"><div class="checklist-circle h-6 w-6 rounded-full border-2 border-gray-300 mr-4 flex-shrink-0 flex items-center justify-center"></div><span>Implement basic email labeling/sorting (e.g., via a Google Workspace Add-on) to reduce inbox overwhelm.</span></label></li>
+                    </ul>
+                </div>
+                 <div>
+                    <h3 class="text-2xl font-bold text-teal-800 border-l-4 border-teal-500 pl-4 mb-6">Week 1-2 Priorities</h3>
+                    <ul class="space-y-4">
+                        <li class="checklist-item"><input type="checkbox" id="task3" class="hidden"><label for="task3" class="flex items-center cursor-pointer"><div class="checklist-circle h-6 w-6 rounded-full border-2 border-gray-300 mr-4 flex-shrink-0 flex items-center justify-center"></div><span>Sign up for HoneyBook and set up company profile, services, and pipeline.</span></label></li>
+                        <li class="checklist-item"><input type="checkbox" id="task4" class="hidden"><label for="task4" class="flex items-center cursor-pointer"><div class="checklist-circle h-6 w-6 rounded-full border-2 border-gray-300 mr-4 flex-shrink-0 flex items-center justify-center"></div><span>Set up HoneyBook Scheduler with your availability and payment integration.</span></label></li>
+                        <li class="checklist-item"><input type="checkbox" id="task5" class="hidden"><label for="task5" class="flex items-center cursor-pointer"><div class="checklist-circle h-6 w-6 rounded-full border-2 border-gray-300 mr-4 flex-shrink-0 flex items-center justify-center"></div><span>Draft content for your initial automated nurture sequence.</span></label></li>
+                    </ul>
+                </div>
+                 <div>
+                    <h3 class="text-2xl font-bold text-teal-800 border-l-4 border-teal-500 pl-4 mb-6">Month 1 Milestones</h3>
+                    <ul class="space-y-4">
+                        <li class="checklist-item"><input type="checkbox" id="task6" class="hidden"><label for="task6" class="flex items-center cursor-pointer"><div class="checklist-circle h-6 w-6 rounded-full border-2 border-gray-300 mr-4 flex-shrink-0 flex items-center justify-center"></div><span>Fully integrate inquiry form and emails with HoneyBook.</span></label></li>
+                        <li class="checklist-item"><input type="checkbox" id="task7" class="hidden"><label for="task7" class="flex items-center cursor-pointer"><div class="checklist-circle h-6 w-6 rounded-full border-2 border-gray-300 mr-4 flex-shrink-0 flex items-center justify-center"></div><span>Launch your automated booking system for paid strategy sessions.</span></label></li>
+                        <li class="checklist-item"><input type="checkbox" id="task8" class="hidden"><label for="task8" class="flex items-center cursor-pointer"><div class="checklist-circle h-6 w-6 rounded-full border-2 border-gray-300 mr-4 flex-shrink-0 flex items-center justify-center"></div><span>Implement the first automated nurture sequence for qualified leads.</span></label></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <hr class="my-20 border-gray-200">
+        
+        <!-- Section 5: Investment -->
+        <section id="investment" class="scroll-mt-20">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-extrabold text-gray-900">Resource & Investment Overview</h2>
+                <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">This summary outlines the required investment in time, budget, and skills to ensure the successful implementation of your new system.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <h4 class="font-bold text-lg text-gray-800">🕒 Time Investment</h4>
+                    <p class="text-gray-600 mt-2"><strong class="text-gray-900">5-8 hours/week</strong> for initial setup (Month 1), reducing to <strong class="text-gray-900">2-3 hours/week</strong> for ongoing management.</p>
+                </div>
+                 <div class="bg-white p-6 rounded-xl shadow-md">
+                    <h4 class="font-bold text-lg text-gray-800">💰 Budget Requirements</h4>
+                    <p class="text-gray-600 mt-2">Est. <strong class="text-gray-900">$36 - $59/month</strong> for the core HoneyBook tool, plus transaction fees and optional integration tools.</p>
+                </div>
+                 <div class="bg-white p-6 rounded-xl shadow-md">
+                    <h4 class="font-bold text-lg text-gray-800">🔧 Skill Requirements</h4>
+                    <p class="text-gray-600 mt-2">A willingness to learn a new, user-friendly platform. We will guide you through every step.</p>
+                </div>
+                 <div class="bg-white p-6 rounded-xl shadow-md">
+                    <h4 class="font-bold text-lg text-gray-800">👥 Team Involvement</h4>
+                    <p class="text-gray-600 mt-2">Requires coordination with your website and social media team to ensure all inquiry channels are integrated.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animated Counters
+            const animateValue = (obj, start, end, duration) => {
+                let startTimestamp = null;
+                const step = (timestamp) => {
+                    if (!startTimestamp) startTimestamp = timestamp;
+                    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                    obj.innerHTML = Math.floor(progress * (end - start) + start);
+                    if (progress < 1) {
+                        window.requestAnimationFrame(step);
+                    }
+                };
+                window.requestAnimationFrame(step);
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateValue(document.getElementById('metric1'), 0, 70, 1500);
+                        animateValue(document.getElementById('metric2'), 0, 40, 1500);
+                        animateValue(document.getElementById('metric3'), 0, 50, 1500);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            const metricsSection = document.getElementById('metric1');
+            if(metricsSection) observer.observe(metricsSection);
+
+            // Donut Chart
+            const ctx = document.getElementById('outcomesChart');
+            if(ctx) {
+                new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Time on High-Value Work', 'Time on Admin & Unqualified Leads'],
+                        datasets: [{
+                            label: 'Time Allocation: After vs. Before',
+                            data: [75, 25], // Represents After state
+                            backgroundColor: [
+                                'rgba(0, 77, 64, 0.8)', /* Teal-900 with opacity */
+                                'rgba(239, 108, 0, 0.7)'  /* Orange-500 with opacity */
+                            ],
+                            borderColor: [
+                                'rgba(0, 77, 64, 1)',
+                                'rgba(239, 108, 0, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return `${context.label}: ${context.raw}%`;
+                                    }
+                                }
+                            },
+                            title: {
+                                display: true,
+                                text: 'Expected Shift in Time Allocation',
+                                font: {
+                                    size: 16
+                                }
+                            }
+                        },
+                        cutout: '60%'
+                    }
+                });
+            }
+
+            // Tabs
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabPanes = document.querySelectorAll('.tab-pane');
+            
+            // Set initial active state
+            document.querySelector('.tab-button[data-tab="tab1"]').classList.add('active');
+            document.getElementById('tab1').classList.remove('hidden');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const tabId = button.dataset.tab;
+
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+
+                    tabPanes.forEach(pane => {
+                        if (pane.id === tabId) {
+                            pane.classList.remove('hidden');
+                        } else {
+                            pane.classList.add('hidden');
+                        }
+                    });
+                });
+            });
+
+            // Nav link active state on scroll
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            const makeActive = (link) => {
+                navLinks.forEach(l => l.classList.remove('active'));
+                document.querySelector(`.nav-link[href="#${link}"]`).classList.add('active');
+            };
+
+            const sectionObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+                        makeActive(entry.target.id);
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            sections.forEach(section => sectionObserver.observe(section));
+        });
+    </script>
+
+</body>
+</html>
